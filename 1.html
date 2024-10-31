@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Tugas Harian</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        #task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .task input[type="text"] {
+            margin-right: 10px;
+            flex: 1;
+        }
+        .task button {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Daftar Tugas Harian</h1>
+
+    <div>
+        <input type="text" id="new-task" placeholder="Tambahkan tugas baru">
+        <button onclick="addTask()">Tambah Tugas</button>
+    </div>
+
+    <ul id="task-list"></ul>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("new-task");
+            const taskText = taskInput.value.trim();
+            
+            if (taskText === "") {
+                alert("Tugas tidak boleh kosong!");
+                return;
+            }
+
+            const taskList = document.getElementById("task-list");
+
+            const taskItem = document.createElement("li");
+            taskItem.className = "task";
+
+            const taskInputElement = document.createElement("input");
+            taskInputElement.type = "text";
+            taskInputElement.value = taskText;
+            taskInputElement.disabled = true;
+            taskItem.appendChild(taskInputElement);
+
+            const editButton = document.createElement("button");
+            editButton.innerText = "Edit";
+            editButton.onclick = function () {
+                if (taskInputElement.disabled) {
+                    taskInputElement.disabled = false;
+                    editButton.innerText = "Simpan";
+                } else {
+                    taskInputElement.disabled = true;
+                    editButton.innerText = "Edit";
+                }
+            };
+            taskItem.appendChild(editButton);
+
+            const deleteButton = document.createElement("button");
+            deleteButton.innerText = "Hapus";
+            deleteButton.onclick = function () {
+                taskList.removeChild(taskItem);
+            };
+            taskItem.appendChild(deleteButton);
+
+            taskList.appendChild(taskItem);
+
+            taskInput.value = "";
+        }
+    </script>
+
+</body>
+</html>
